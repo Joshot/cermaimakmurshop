@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
 use App\Models\Order;
 use App\Models\OrderItem;
 //use App\Models\Product;
@@ -167,10 +168,12 @@ class OrderResource extends Resource
                                     $total += $get("items.{$key}.total_amount");
                                 }
 
-                                return Number::currency($total, "USD");
+                                $set('grand_total', $total);
+                                return Number::currency($total, $get('currency') ?? 'USD'); // Use selected currency
                             }),
                         Hidden::make('grand_total')
                             ->default(0)
+                            ->dehydrated() // Ensure the value is saved to the database
                     ])
 
                 ])->columnSpanFull()
@@ -181,33 +184,33 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->label('Customer')
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('grand_total')
+                Tables\Columns\TextColumn::make('grand_total')
                     ->numeric()
                     ->sortable()
-                    ->money('USD'),
+                    ->money(fn($record) => $record->currency),
 
-                TextColumn::make('payment_method')
+                Tables\Columns\TextColumn::make('payment_method')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('payment_status')
+                Tables\Columns\TextColumn::make('payment_status')
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('currency')
+                Tables\Columns\TextColumn::make('currency')
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('shipping_method')
+                Tables\Columns\TextColumn::make('shipping_method')
                     ->sortable()
                     ->searchable(),
 
-                SelectColumn::make('status')
+                Tables\Columns\SelectColumn::make('status')
                     ->options([
                         'new' => 'New',
                         'processing' => 'Processing',
@@ -218,12 +221,12 @@ class OrderResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -249,7 +252,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressRelationManager::class
         ];
     }
 
