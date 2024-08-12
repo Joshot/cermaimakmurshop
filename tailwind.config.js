@@ -6,10 +6,11 @@ export default {
       "./resources/**/*.vue",
       'node_modules/preline/dist/*.js',
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
+    darkMode: 'class',
+    theme: {
+        extend: {},
+    },
+    plugins: [
       require('preline/plugin'),],
 }
 
