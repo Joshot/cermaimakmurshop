@@ -43,6 +43,49 @@ class CartManagement{
 
     }
 
+
+    // add item to cart with qty
+    static public function addItemToCartWithQty($product_id, $qty = 1)
+    {
+        $cart_items = self::getCartItemsFromCookie();
+
+        $existing_item = null;
+
+        foreach($cart_items as $key => $item){
+            if($item['product_id'] == $product_id){
+                $existing_item = $key;
+                break;
+            }
+        }
+
+        if($existing_item !== null){
+            // Update quantity and recalculate total amount
+            $cart_items[$existing_item]['quantity'] = $qty;
+            $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
+        }
+        else{
+            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
+            if($product){
+                // Calculate total amount based on quantity
+                $cart_items[] = [
+                    'product_id' => $product_id,
+                    'name' => $product->name,
+                    'image' => $product->images[0],
+                    'quantity' => $qty,
+                    'unit_amount' => $product->price,
+                    'total_amount' => $product->price * $qty, // Correct calculation of total amount
+                ];
+            }
+        }
+
+        // Save updated cart items back to cookie
+        self::addCartItemsToCookie($cart_items);
+
+        return count($cart_items);
+    }
+
+
+
     // remove item from cart
     static public function removeCartItem($product_id){
         $cart_items = self::getCartItemsFromCookie();
@@ -60,7 +103,7 @@ class CartManagement{
 
     // add cart items to cookie
     static public function addCartItemsToCookie($cart_items){
-        Cookie::queue('cart_items', json_encode($cart_items), 60 * 24 * 30);
+        Cookie::queue('cart_items', json_encode($cart_items), 60 * 24 * 30, '/', null, false, true);
     }
 
     // clear cart items from cookie
@@ -69,8 +112,8 @@ class CartManagement{
     }
 
     // get all cart items from cookie
-    static public function getCartItemsFromCookie(){
-        $cart_items = json_decode(Cookie::get('get_items'), true);
+    public static function getCartItemsFromCookie(){
+        $cart_items = json_decode(Cookie::get('cart_items'), true);  // Mengambil 'cart_items', bukan 'get_items'
         if(!$cart_items){
             $cart_items = [];
         }
@@ -110,8 +153,13 @@ class CartManagement{
 
     // calculate grand total
     static public function calculateGrandTotal($items){
-        return array_sum(array_column($items, 'total_amount'));
+        $grand_total = 0;
+        foreach($items as $item){
+            $grand_total += $item['quantity'] * $item['unit_amount'];  // Perhitungan total berdasarkan quantity dan harga satuan
+        }
+        return $grand_total;
     }
+
 
 
 }
