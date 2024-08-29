@@ -12,6 +12,7 @@ class CartPage extends Component
 {
     public $cart_items = [];
     public $grand_total;
+    public $editingQty = null;
 
     public function mount()
     {
@@ -33,6 +34,18 @@ class CartPage extends Component
     public function decreaseQty($product_id){
         $this->cart_items = CartManagement::decrementQuantityToCartItem($product_id);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
+    }
+
+    public function editQty($product_id)
+    {
+        $this->editingQty = $product_id;
+    }
+
+    public function saveQty($product_id)
+    {
+        $this->cart_items[$product_id]['quantity'] = floatval($this->cart_items[$product_id]['quantity']);
+        $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
+        $this->editingQty = null;
     }
 
     public function render()

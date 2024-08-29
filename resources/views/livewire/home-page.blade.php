@@ -8,96 +8,97 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <!-- Swiper.js JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<!--    <link rel="stylesheet" href="../../css/home.css">-->
+    <!-- Custom Styles -->
     <style>
-        .swiper-container {
-            position: relative;
+        body {
+            background-color: #ffffff; /* Putih */
         }
 
-        .swiper-navigation {
-            position: absolute;
-            top: 1em;
-            right: 1em;
-            display: flex;
-            gap: 1em;
-            justify-content: flex-end;
-            z-index: 10;
-            padding: 5em;
+        .swiper-pagination-bullet {
+            background-color: #ffffff; /* White color */
+            border: 1px solid #cccccc; /* Optional: border color to make bullets visible on light backgrounds */
         }
 
-        .swiper-button-next,
-        .swiper-button-prev {
-            width: 1em;
-            height: 1em;
-            background: white;
-            border-radius: 50%;
-            color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em; /* Ukuran font diperkecil */
+        .swiper-pagination-bullet-active {
+            background-color: #ffffff; /* White color for active bullet */
+            border: 1px solid #333333; /* Optional: darker border for active bullet to make it stand out */
         }
 
+        .swiper-slide .absolute {
+            z-index: 10; /* Ensure it is above other content */
+        }
+
+        .swiper-slide .bottom-2.right-2 {
+            z-index: 50; /* Ensure breadcrumb is on top */
+            padding: 0.5em; /* Add padding if necessary */
+        }
+
+        .hover\:underline:hover {
+            text-decoration: underline; /* Ensure hover effect */
+        }
     </style>
 </head>
+
 <body>
 <div>
 
-    <!--  Hero Section Start  -->
-    <div class="w-full h-screen relative overflow-hidden">
-        <!-- Swiper -->
-        <div class="swiper-container h-full">
-            <div class="swiper-wrapper">
-                @foreach ($products as $product)
-                <div class="swiper-slide relative" style="padding: 1em; border-radius: 10em;">
-                    <img style="border-radius: 1em;" src="{{ url('storage', $product->images[0]) }}" alt="{{ $product->name }}" class="object-cover w-full h-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6">
-                        <div class="text-center text-white">
-                            <h1 class="text-3xl font-bold sm:text-4xl lg:text-6xl lg:leading-tight">{{ $product->name }}</h1>
-                            <p class="mt-3 text-lg">{{ $product->description }}</p>
-                            <p class="mt-3 text-lg font-semibold">Brand: {{ $product->brand->name }} > Category: {{ $product->category->name }} > Product: {{ $product->name }}</p>
+    <!-- Hero Section Start -->
+    <div class="flex items-center bg-white justify-center" style="padding: 1em;">
+        <div class="w-full h-screen relative overflow-hidden" style="max-width: 90%; max-height: 35em; border-radius: 1em">
+            <!-- Swiper -->
+            <div class="swiper-container h-full w-full">
+                <div class="swiper-wrapper">
+                    @foreach ($products as $product)
+                    <div class="swiper-slide relative flex justify-center items-start">
+                        <img src="{{ url('storage', $product->images[0]) }}" alt="{{ $product->name }}" class="object-cover w-full h-auto">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6">
+                            <div class="text-center text-white max-w-4xl" style="max-width: 60%;">
+                                <h1 class="text-3xl font-bold sm:text-4xl lg:text-6xl lg:leading-tight">{{ $product->name }}</h1>
+                                <p class="mt-3 text-lg">{{ $product->description }}</p>
+                            </div>
+                        </div>
+                        <!-- Breadcrumbs in the bottom right corner -->
+                        <div class="absolute bottom-2 right-2 text-sm text-white z-10">
+                            <p class="font-semibold">
+                                <a href="/products?selected_brands[0]={{ $product->brand->id }}" class="hover:underline">{{ $product->brand->name }}</a> >
+                                <a href="/products?selected_brands[0]={{ $product->brand->id }}&selected_categories[0]={{ $product->category->id }}" class="hover:underline">{{ $product->category->name }}</a> >
+                                <a href="/products/{{ $product->slug }}" class="hover:underline">{{ $product->name }}</a>
+                            </p>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-            <!-- Add Navigation -->
-            <div class="swiper-navigation">
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </div>
-
-    <!--  Hero Section End  -->
+    <!-- Hero Section End -->
 
     <!--  Brand Section Start  -->
-    <section class="py-20">
+    <section class="py-20 bg-white">
         <div class="max-w-xl mx-auto">
             <div class="text-center ">
                 <div class="relative flex flex-col items-center">
-                    <h1 class="text-5xl font-bold dark:text-gray-200"> Browse Popular<span class="text-blue-500"> Brands
-          </span> </h1>
+                    <h1 class="text-5xl font-bold dark:text-gray-200"> Product
+                        <span class="text-blue-500">
+                        Season
+                    </span>
+                    </h1>
                     <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
-                        <div class="flex-1 h-2 bg-blue-200">
-                        </div>
-                        <div class="flex-1 h-2 bg-blue-400">
-                        </div>
-                        <div class="flex-1 h-2 bg-blue-600">
-                        </div>
+                        <div class="flex-1 h-2 bg-blue-200"></div>
+                        <div class="flex-1 h-2 bg-blue-400"></div>
+                        <div class="flex-1 h-2 bg-blue-600"></div>
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque?
-                    Pariatur
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque? Pariatur
                     numquam, odio quod nobis ipsum ex cupiditate?
                 </p>
             </div>
         </div>
-        <div class="justify-center max-w-6xl px-4 py-4 mx-auto lg:py-0">
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-2">
+        <div class="max-w-6xl px-4 py-4 mx-auto lg:py-0">
+            <div class="grid grid-cols-1 gap-6">
                 @foreach ($brands as $brand)
                 <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key="{{ $brand->id }}">
                     <a href="/products?selected_brands[0]={{ $brand->id }}" class="">
@@ -115,19 +116,20 @@
     </section>
     <!--  Brand Section End  -->
 
+
     <!--  Category Section Start  -->
-    <div class="bg-orange-200 py-20">
+    <div class="bg-white py-20">
         <div class="max-w-xl mx-auto">
             <div class="text-center ">
                 <div class="relative flex flex-col items-center">
-                    <h1 class="text-5xl font-bold dark:text-gray-200"> Browse <span class="text-blue-500"> Categories
+                    <h1 class="text-5xl font-bold dark:text-gray-200"> Browse <span class="text-red-500"> Categories
           </span> </h1>
                     <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
-                        <div class="flex-1 h-2 bg-blue-200">
+                        <div class="flex-1 h-2 bg-red-200">
                         </div>
-                        <div class="flex-1 h-2 bg-blue-400">
+                        <div class="flex-1 h-2 bg-red-400">
                         </div>
-                        <div class="flex-1 h-2 bg-blue-600">
+                        <div class="flex-1 h-2 bg-red-600">
                         </div>
                     </div>
                 </div>
@@ -168,7 +170,6 @@
     <!--  Category Section End  -->
 </div>
 
-
 <script>
     var swiper = new Swiper('.swiper-container', {
         loop: true,
@@ -185,8 +186,6 @@
         },
     });
 </script>
-
-
 
 </body>
 
