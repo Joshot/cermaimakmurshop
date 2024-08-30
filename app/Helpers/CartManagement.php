@@ -49,40 +49,18 @@ class CartManagement{
     {
         $cart_items = self::getCartItemsFromCookie();
 
-        $existing_item = null;
-
         foreach($cart_items as $key => $item){
             if($item['product_id'] == $product_id){
-                $existing_item = $key;
-                break;
+                // Update quantity and recalculate total amount
+                $cart_items[$key]['quantity'] = $qty;
+                $cart_items[$key]['total_amount'] = $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
             }
         }
 
-        if($existing_item !== null){
-            // Update quantity and recalculate total amount
-            $cart_items[$existing_item]['quantity'] = $qty;
-            $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
-        }
-        else{
-            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
-            if($product){
-                // Calculate total amount based on quantity
-                $cart_items[] = [
-                    'product_id' => $product_id,
-                    'name' => $product->name,
-                    'image' => $product->images[0],
-                    'quantity' => $qty,
-                    'unit_amount' => $product->price,
-                    'total_amount' => $product->price * $qty, // Correct calculation of total amount
-                ];
-            }
-        }
-
-        // Save updated cart items back to cookie
         self::addCartItemsToCookie($cart_items);
-
-        return count($cart_items);
+        return $cart_items;
     }
+
 
 
 

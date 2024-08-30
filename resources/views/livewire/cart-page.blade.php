@@ -29,17 +29,18 @@
                             <td class="py-4">
                                 <div class="flex items-center">
                                     <button wire:click="decreaseQty({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 mr-2">-</button>
-
                                     <!-- Quantity Input -->
-                                    @if ($editingQuantity === $item['product_id'])
-                                    <input type="text"
-                                           wire:model.defer="cart_items.{{ $loop->index }}.quantity"
-                                           wire:blur="updateQty({{ $item['product_id'] }})"
-                                           class="text-center w-16 border rounded-md py-2 px-4">
+                                    @if ($editingQty === $item['product_id'])
+                                    <input wire:model.defer="cart_items.{{ $item['product_id'] }}.quantity"
+                                           wire:keydown.enter="saveQty({{ $item['product_id'] }})"
+                                           wire:blur="saveQty({{ $item['product_id'] }})"
+                                           type="text"
+                                           class="text-center w-16 border rounded-md py-1 px-2"
+                                           value="{{ $item['quantity'] }}">
                                     @else
-                                    <span wire:click="editQty({{ $item['product_id'] }})" class="text-center w-8 cursor-pointer">{{ $item['quantity'] }}</span>
+                                    <span wire:click="editQty({{ $item['product_id'] }})"
+                                          class="text-center cursor-pointer w-16 border rounded-md py-1 px-2">{{ $item['quantity'] }}</span>
                                     @endif
-
                                     <button wire:click="increaseQty({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 ml-2">+</button>
                                 </div>
                             </td>

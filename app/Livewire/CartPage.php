@@ -43,10 +43,20 @@ class CartPage extends Component
 
     public function saveQty($product_id)
     {
-        $this->cart_items[$product_id]['quantity'] = floatval($this->cart_items[$product_id]['quantity']);
+        $quantity = floatval($this->cart_items[$product_id]['quantity']);
+
+        // If the input is empty or less than 1, set it to the minimum value of 1
+        if ($quantity < 1 || $quantity == null) {
+            $quantity = 1;
+        }
+
+        $this->cart_items[$product_id]['quantity'] = $quantity;
+        $this->cart_items = CartManagement::addItemToCartWithQty($product_id, $quantity);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
         $this->editingQty = null;
     }
+
+
 
     public function render()
     {
