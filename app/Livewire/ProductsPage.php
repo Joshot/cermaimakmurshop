@@ -52,6 +52,19 @@ class ProductsPage extends Component
 
     }
 
+    public function index(Request $request)
+    {
+        $searchQuery = $request->input('search');
+        $products = Product::query()
+            ->when($searchQuery, function($query, $searchQuery) {
+                return $query->where('name', 'like', '%' . $searchQuery . '%');
+            })
+            ->paginate(20);
+
+        return view('products.index', compact('products'));
+    }
+
+
     public function render()
     {
         $productQuery = Product::query()->where('is_active', 1);
@@ -83,6 +96,7 @@ class ProductsPage extends Component
         if($this->sort == 'price'){
             $productQuery->orderBy('price');
         }
+
 
         return view('livewire.products-page', [
             'products' => $productQuery->paginate(9),

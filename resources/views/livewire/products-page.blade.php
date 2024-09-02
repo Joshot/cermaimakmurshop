@@ -92,7 +92,7 @@
                     </div>
                     <div class="flex flex-wrap items-center ">
                         @foreach ($products as $product)
-                        <div class="w-full px-3 mb-6 sm:w-1/2 md:w-1/3" style="max-width: 12em; min-width: 12em; max-height: 3em; min-height: 3em">
+                        <div class="w-full px-3 mb-6 sm:w-1/4 md:w-1/5" >
                             <div class="relative border border-gray-300 dark:border-gray-700 group">
                                 <div class="relative bg-gray-200">
                                     <a href="/products/{{ $product->slug }}" class="block">
@@ -112,14 +112,14 @@
                                     </p>
                                 </div>
                                 <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <div class="space-y-2">
-                                        <a href="/products/{{ $product->slug }}" class="flex items-center justify-center px-4 py-2 text-black hover:text-white bg-sky-300 rounded-md hover:bg-sky-600 transition-colors" style="height: 2.5em;">
+                                    <div class="space-y-2 grid grid-rows-3 grid-flow-col">
+                                        <a href="/products/{{ $product->slug }}" class="flex text-sm items-center justify-center px-4 py-2 text-black hover:text-white bg-sky-300 rounded-md hover:bg-sky-600 transition-colors" style="height: 2.5em;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="w-5 h-5 bi bi-eye" viewBox="0 0 16 16">
                                                 <path d="M16 8s-3-6-8-6S0 8 0 8s3 6 8 6 8-6 8-6zm-8 4.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-8a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
                                             </svg>
                                             <span class="ml-2">View Product</span>
                                         </a>
-                                        <button wire:click.prevent="addToCart({{ $product->id }})" class="flex items-center justify-center px-4 py-2 text-black hover:text-white bg-teal-300 rounded-md hover:bg-teal-600 transition-colors" style="height: 2.5em;">
+                                        <button wire:click.prevent="addToCart({{ $product->id }})" class="flex text-sm items-center justify-center px-4 py-2 text-black hover:text-white bg-teal-300 rounded-md hover:bg-teal-600 transition-colors" style="height: 2.5em;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="w-5 h-5 bi bi-cart3" viewBox="0 0 16 16">
                                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                             </svg>

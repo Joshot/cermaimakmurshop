@@ -19,8 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomePage::class);
 Route::get('/categories', CategoriesPage::class)->name('categories');
 Route::get('/products', ProductsPage::class)->name('products');
-Route::get('/products/{slug}', ProductDetailPage::class);
+Route::get('/products/{slug}', ProductDetailPage::class)->name('product.show');
 Route::get('/cart', CartPage::class)->name('cart');
+
 
 Route::middleware('auth')->group(function(){
     Route::get('/logout', function(){
