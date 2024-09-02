@@ -37,18 +37,14 @@ class CartManagement{
                 ];
             }
         }
-
         self::addCartItemsToCookie($cart_items);
         return count($cart_items);
-
     }
-
 
     // add item to cart with qty
     static public function addItemToCartWithQty($product_id, $qty = 1)
     {
         $cart_items = self::getCartItemsFromCookie();
-
         foreach($cart_items as $key => $item){
             if($item['product_id'] == $product_id){
                 // Update quantity and recalculate total amount
@@ -56,27 +52,20 @@ class CartManagement{
                 $cart_items[$key]['total_amount'] = $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
             }
         }
-
         self::addCartItemsToCookie($cart_items);
         return $cart_items;
     }
 
-
-
-
     // remove item from cart
     static public function removeCartItem($product_id){
         $cart_items = self::getCartItemsFromCookie();
-
         foreach($cart_items as $key => $item){
             if($item['product_id'] == $product_id ){
                 unset($cart_items[$key]);
             }
         }
-
         self::addCartItemsToCookie($cart_items);
         return $cart_items;
-
     }
 
     // add cart items to cookie
@@ -101,7 +90,6 @@ class CartManagement{
     // increment item quantity
     static public function incrementQuantityToCartItem($product_id){
         $cart_items = self::getCartItemsFromCookie();
-
         foreach($cart_items as $key => $item){
             if($item['product_id'] == $product_id ){
                 $cart_items[$key]['quantity']++;
@@ -115,7 +103,6 @@ class CartManagement{
     // decrement item quantity
     static public function decrementQuantityToCartItem($product_id){
         $cart_items = self::getCartItemsFromCookie();
-
         foreach($cart_items as $key => $item){
             if($item['product_id'] == $product_id ){
                 if($cart_items[$key]['quantity'] > 1 ){
@@ -128,7 +115,6 @@ class CartManagement{
         return $cart_items;
     }
 
-
     // calculate grand total
     static public function calculateGrandTotal($items){
         $grand_total = 0;
@@ -137,7 +123,5 @@ class CartManagement{
         }
         return $grand_total;
     }
-
-
 
 }
