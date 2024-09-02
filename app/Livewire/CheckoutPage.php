@@ -11,8 +11,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Checkout')]
-class CheckoutPage extends Component
-{
+class CheckoutPage extends Component {
     public $first_name;
     public $last_name;
     public $phone;
@@ -57,6 +56,7 @@ class CheckoutPage extends Component
             ];
         }
 
+        // Order
         $order = new Order();
         $order->user_id = auth()->user()->id;
         $order->grand_total = CartManagement::calculateGrandTotal($cart_items);
@@ -68,6 +68,7 @@ class CheckoutPage extends Component
         $order->shipping_method = 'none';
         $order->notes = 'Order placed by ' . auth()->user()->name;
 
+        // Address
         $address = new Address();
         $address->first_name = $this->first_name;
         $address->last_name = $this->last_name;
@@ -77,6 +78,7 @@ class CheckoutPage extends Component
         $address->state = $this->state;
         $address->zip_code = $this->zip_code;
 
+        // End & Save
         $order->save();
         $address->order_id = $order->id;
         $address->save();
@@ -89,9 +91,7 @@ class CheckoutPage extends Component
 
     }
 
-
-    public function render()
-    {
+    public function render() {
         $cart_items = CartManagement::getCartItemsFromCookie();
         $grand_total = CartManagement::calculateGrandTotal($cart_items);
         return view('livewire.checkout-page', [

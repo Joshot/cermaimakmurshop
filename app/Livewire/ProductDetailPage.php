@@ -11,29 +11,28 @@ use Livewire\Component;
 
 
 #[Title('Products Detaik - Cermaimakmur Shop')]
-class ProductDetailPage extends Component
-{
+class ProductDetailPage extends Component {
 
     use LivewireAlert;
     public $slug;
     public $quantity = 1;
 
-    public function mount($slug){
+    public function mount($slug) {
         $this->slug = $slug;
     }
 
-    public function increaseQty(){
+    public function increaseQty() {
         $this->quantity++;
     }
 
-    public function decreaseQty(){
+    public function decreaseQty() {
         if($this->quantity > 1){
             $this->quantity--;
         }
     }
 
     //Add To Cart
-    public function addToCart($product_id){
+    public function addToCart($product_id) {
         $total_count = CartManagement::addItemToCartWithQty($product_id, $this->quantity);
 
         $this->dispatch('update-cart-count', total_count: $total_count)->to(Navbar::class);
@@ -46,10 +45,10 @@ class ProductDetailPage extends Component
 
     }
 
-    public function render()
-    {
+    public function render() {
         return view('livewire.product-detail-page', [
             'product' => Product::where('slug', $this->slug)->firstOrFail(),
         ]);
     }
+
 }

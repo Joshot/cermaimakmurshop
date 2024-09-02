@@ -9,16 +9,15 @@ use Livewire\WithPagination;
 
 
 #[Title('My Orders')]
-class MyOrdersPage extends Component
-{
+class MyOrdersPage extends Component {
 
     use withPagination;
 
-    public function render()
-    {
+    public function render() {
         $my_orders = Order::where('user_id', auth()->id())->latest()->paginate(10);
         return view('livewire.my-orders-page', [
             'orders' => $my_orders,
         ]);
     }
+
 }

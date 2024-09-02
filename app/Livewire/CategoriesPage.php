@@ -8,13 +8,14 @@ use Livewire\Component;
 
 
 #[Title('Categories Page - Cermaimakmur Shop')]
-class CategoriesPage extends Component
-{
-    public function render()
-    {
+
+class CategoriesPage extends Component {
+
+    public function render() {
         $categories = Category::where('is_active', 1)->get();
         return view('livewire.categories-page', [
             'categories' => $categories,
         ]);
     }
+
 }
