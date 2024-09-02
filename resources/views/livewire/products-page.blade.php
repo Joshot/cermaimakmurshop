@@ -16,7 +16,6 @@
                             </li>
                             @endforeach
                         </ul>
-
                     </div>
                     <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 rounded-xl dark:border-gray-900">
                         <h2 class="text-2xl font-bold dark:text-gray-400">Brand</h2>

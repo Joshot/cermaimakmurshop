@@ -14,7 +14,6 @@
                         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
                 </div>
-
                 <div class="grow">
                     <div class="flex items-center gap-x-2">
                         <p class="text-xs uppercase tracking-wide text-gray-500">
@@ -40,7 +39,6 @@
                         <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
                     </svg>
                 </div>
-
                 <div class="grow">
                     <div class="flex items-center gap-x-2">
                         <p class="text-xs uppercase tracking-wide text-gray-500">
@@ -138,7 +136,6 @@
         <!-- End Card -->
     </div>
     <!-- End Grid -->
-
     <div class="flex flex-col md:flex-row gap-4 mt-4">
         <div class="md:w-3/4">
             <div class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4">
@@ -152,7 +149,6 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     @foreach($order_items as $item)
                         <tr wire:key="{{ $item->id }}">
                             <td class="py-4">
@@ -168,12 +164,9 @@
                             <td class="py-4">{{ Number::currency($item->total_amount) }}</td>
                         </tr>
                     @endforeach
-
-
                     </tbody>
                 </table>
             </div>
-
             <div class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4">
                 <h1 class="font-3xl font-bold text-slate-500 mb-3">Shipping Address</h1>
                 <div class="flex justify-between items-center">
@@ -186,7 +179,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="md:w-1/4">
             <div class="bg-white rounded-lg shadow-md p-6">
@@ -208,7 +200,6 @@
                     <span class="font-semibold">Grand Total</span>
                     <span class="font-semibold">{{ Number::currency($item->order->grand_total) }}</span>
                 </div>
-
             </div>
         </div>
     </div>
