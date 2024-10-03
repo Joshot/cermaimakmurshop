@@ -50,16 +50,18 @@
                 <div class="swiper-wrapper">
                     @foreach ($products as $product)
                     <div class="swiper-slide relative flex justify-center items-start">
+                        <!-- Gambar Produk -->
                         <img src="{{ url('storage', $product->images[0]) }}" alt="{{ $product->name }}" class="object-cover w-full h-auto">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6">
-                            <div class="text-center text-white max-w-4xl" style="max-width: 60%;">
-                                <h1 class="text-3xl font-bold sm:text-4xl lg:text-6xl lg:leading-tight">{{ $product->name }}</h1>
-                                <p class="mt-3 text-lg">{{ $product->description }}</p>
-                            </div>
-                        </div>
-                        <!-- Breadcrumbs in the bottom right corner -->
-                        <div class="absolute bottom-2 right-2 text-sm text-white z-10">
-                            <p class="font-semibold">
+
+                        <!-- Nama Produk dan Breadcrumbs di pojok kanan bawah -->
+                        <div class="absolute bottom-4 right-4 z-10 bg-white bg-opacity-90 p-3 rounded-md">
+                            <!-- Nama Produk -->
+                            <a href="/products/{{ $product->slug }}" class="hover:text-black text-md font-bold text-gray-800">
+                                {{ $product->name }}
+                            </a>
+
+                            <!-- Breadcrumbs -->
+                            <p class="text-xs text-gray-600 mt-1">
                                 <a href="/products?selected_brands[0]={{ $product->brand->id }}" class="hover:underline">{{ $product->brand->name }}</a> >
                                 <a href="/products?selected_brands[0]={{ $product->brand->id }}&selected_categories[0]={{ $product->category->id }}" class="hover:underline">{{ $product->category->name }}</a> >
                                 <a href="/products/{{ $product->slug }}" class="hover:underline">{{ $product->name }}</a>
@@ -68,9 +70,11 @@
                     </div>
                     @endforeach
                 </div>
-                <!-- Add Pagination -->
+
+                <!-- Pagination Swiper -->
                 <div class="swiper-pagination"></div>
             </div>
+
         </div>
     </div>
     <!-- Hero Section End -->
@@ -78,12 +82,11 @@
     <!--  Brand Section Start  -->
     <section class="py-20 bg-white">
         <div class="max-w-xl mx-auto">
-            <div class="text-center ">
+            <div class="text-center">
                 <div class="relative flex flex-col items-center">
-                    <h1 class="text-5xl font-bold dark:text-gray-200"> Product
-                        <span class="text-blue-500">
-                        Season
-                    </span>
+                    <h1 class="text-5xl font-bold dark:text-gray-200">
+                        Product
+                        <span class="text-blue-500">Season</span>
                     </h1>
                     <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
                         <div class="flex-1 h-2 bg-blue-200"></div>
@@ -92,24 +95,79 @@
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque? Pariatur
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque? Pariatur
                     numquam, odio quod nobis ipsum ex cupiditate?
                 </p>
             </div>
         </div>
+
         <div class="max-w-6xl px-4 py-4 mx-auto lg:py-0">
-            <div class="grid grid-cols-1 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 @foreach ($brands as $brand)
-                <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key="{{ $brand->id }}">
-                    <a href="/products?selected_brands[0]={{ $brand->id }}" class="">
+                @if($brand->name == 'Seasonal Products')
+                <!-- Seasonal Products -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 group">
+                    <a href="/products?selected_brands[0]={{ $brand->id }}">
                         <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" class="object-cover w-full h-64 rounded-t-lg">
                     </a>
                     <div class="p-5 text-center">
-                        <a href="" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                            {{ $brand->name }}
+                        <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
+                            Seasonal Products
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-4">
+                            Discover products perfect for the changing seasons, handpicked to match the mood.
+                        </p>
+                        <a href="/products?selected_brands[0]={{ $brand->id }}" class="text-blue-600 hover:text-blue-800 font-medium flex justify-center items-center gap-1 mt-6">
+                            Explore Seasonal
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 -5 20 20" fill="currentColor">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
                         </a>
                     </div>
                 </div>
+                @elseif($brand->name == 'Special Products')
+                <!-- Special Products -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 group">
+                    <a href="/products?selected_brands[0]={{ $brand->id }}">
+                        <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" class="object-cover w-full h-64 rounded-t-lg">
+                    </a>
+                    <div class="p-5 text-center">
+                        <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
+                            Special Products
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-4">
+                            Unique, limited edition products curated for those special moments.
+                        </p>
+                        <a href="/products?selected_brands[0]={{ $brand->id }}" class="text-blue-600 hover:text-blue-800 font-medium flex justify-center items-center gap-1 mt-6">
+                            Explore Special
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 -5 20 20" fill="currentColor">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @elseif($brand->name == 'Everyday Products')
+                <!-- Everyday Products -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 group">
+                    <a href="/products?selected_brands[0]={{ $brand->id }}">
+                        <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" class="object-cover w-full h-64 rounded-t-lg">
+                    </a>
+                    <div class="p-5 text-center">
+                        <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
+                            Everyday Products
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-4">
+                            Essentials that fit perfectly into your daily life, always available.
+                        </p>
+                        <a href="/products?selected_brands[0]={{ $brand->id }}" class="text-blue-600 hover:text-blue-800 font-medium flex justify-center items-center gap-1 mt-6">
+                            Explore Everyday
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 -5 20 20" fill="currentColor">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @endif
                 @endforeach
             </div>
         </div>
@@ -117,57 +175,302 @@
     <!--  Brand Section End  -->
 
 
+
     <!--  Category Section Start  -->
     <div class="bg-white py-20">
         <div class="max-w-xl mx-auto">
-            <div class="text-center ">
+            <div class="text-center">
                 <div class="relative flex flex-col items-center">
-                    <h1 class="text-5xl font-bold dark:text-gray-200"> Browse <span class="text-red-500"> Categories
-          </span> </h1>
+                    <h1 class="text-5xl font-bold dark:text-gray-200">
+                        Browse <span class="text-red-500">Categories</span>
+                    </h1>
                     <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
-                        <div class="flex-1 h-2 bg-red-200">
-                        </div>
-                        <div class="flex-1 h-2 bg-red-400">
-                        </div>
-                        <div class="flex-1 h-2 bg-red-600">
-                        </div>
+                        <div class="flex-1 h-2 bg-red-200"></div>
+                        <div class="flex-1 h-2 bg-red-400"></div>
+                        <div class="flex-1 h-2 bg-red-600"></div>
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque?
-                    Pariatur
-                    numquam, odio quod nobis ipsum ex cupiditate?
+                    Explore a variety of categories tailored to your interests and needs!
                 </p>
             </div>
         </div>
 
         <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 @foreach ($categories as $category)
-                <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}">
-                    <div class="p-4 md:p-5">
+                @if($category->name == 'Gift Box')
+                <!-- Gift Box -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <img class="h-[2.375rem] w-[2.375rem] rounded-full" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
-                                <div class="ms-3">
-                                    <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-gray-400 dark:text-gray-200">
-                                        {{ $category->name }}
-                                    </h3>
-                                </div>
-                            </div>
-                            <div class="ps-3">
-                                <svg class="flex-shrink-0 w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m9 18 6-6-6-6" />
-                                </svg>
-                            </div>
+                            <span class="text-blue-600 font-medium">View Gift Box</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
                         </div>
                     </div>
                 </a>
+                @elseif($category->name == 'Gift Bag')
+                <!-- Gift Bag -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">A present is made for the pleasure of who received them. Give an extravagant design and a present that comes from your heart then it will be the best gift of all.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Gift Bag</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+                @elseif($category->name == 'Gift Card / Tag')
+                <!-- Gift Card / Tag -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Gift Card / Tag</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Gift Wrap')
+                <!-- Gift Wrap -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">A little splash of color can makes your moment more colorful.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Gift Wrap</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Gift Cards & Gift Tags')
+                <!-- Gift Cards & Gift Tags -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">A little splash of color can makes your moment more colorful.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Gift Cards & Gift Tags</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Gift Sack')
+                <!-- Gift Sack -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Gift Sack</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Tissue')
+                <!-- Tissue -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Tissue</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Bow & Ribbon')
+                <!-- Bow & Ribbon -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Bow & Ribbon</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Crackers')
+                <!-- Crackers -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Crackers</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Stickers')
+                <!-- Stickers -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Stickers</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Box')
+                <!-- Box -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Box</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @elseif($category->name == 'Others')
+                <!-- Others -->
+                <a href="/products?selected_categories[0]={{ $category->id }}" wire:key="{{ $category->id }}" class="group flex flex-col bg-white border border-gray-200 shadow-lg rounded-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img class="w-full h-40 object-cover group-hover:scale-110 transition-transform" src="{{ url('storage', $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200">
+                            {{ $category->name }}
+                        </h3>
+                        <p class="text-gray-500 text-sm mt-2">Your sunny days immediately begin with garnishes of favorite and unique colors that always invite you to smile.</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-medium">View Others</span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                @endif
                 @endforeach
             </div>
         </div>
     </div>
     <!--  Category Section End  -->
+
+
+
+
 </div>
 
 <script>
