@@ -71,21 +71,28 @@
 
                     <div class="px-3 mb-6">
                         <div class="flex items-center justify-between p-4 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800 rounded-xl shadow-lg">
-                            <div class="flex items-center ml-auto"> <!-- Tambahkan ml-auto di sini -->
+                            <div class="flex items-center">
+                                <!-- Search Input -->
+                                <input type="text" wire:model.live="searchQuery" placeholder="Search products..."
+                                       class="block w-96 p-3 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400" />
+                            </div>
+                            <div class="flex items-center ml-auto">
                                 <label for="sort" class="mr-4 text-lg font-semibold text-gray-700 dark:text-gray-300">Sort By:</label>
                                 <div class="relative">
                                     <select id="sort" wire:model.live="sort" class="block w-52 p-3 text-base bg-white border border-gray-300 rounded-lg shadow-sm cursor-pointer appearance-none dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 focus:ring-rose-500 focus:border-rose-500">
+                                        <option value="suggested">✨ Suggested</option> <!-- Opsi baru -->
                                         <option value="latest">🔄 Sort by Latest</option>
                                         <option value="price">💲 Sort by Price</option>
                                     </select>
                                     <span class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4M16 15l-4 4-4-4" />
-                    </svg>
-                </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4M16 15l-4 4-4-4" />
+                                        </svg>
+                                    </span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
 

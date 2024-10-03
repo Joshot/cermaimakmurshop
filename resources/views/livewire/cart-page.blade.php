@@ -1,61 +1,61 @@
-<div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
-    <div class="container mx-auto px-4">
-        <h1 class="text-2xl font-semibold mb-4">Shopping Cart</h1>
-        <div class="flex flex-col md:flex-row gap-4">
+<div class="w-full max-w-[85rem] py-12 px-6 sm:px-8 lg:px-12 mx-auto">
+    <div class="container mx-auto px-6">
+        <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Shopping Cart</h1>
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Cart Items -->
             <div class="md:w-3/4">
-                <div class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-6">
                     <table class="w-full">
-                        <thead>
+                        <thead class="border-b dark:border-gray-700">
                         <tr>
-                            <th class="text-left font-semibold">Product</th>
-                            <th class="text-left font-semibold">Price</th>
-                            <th class="text-left font-semibold">Quantity</th>
-                            <th class="text-left font-semibold">Total</th>
-                            <th class="text-left font-semibold">Remove</th>
+                            <th class="text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Product</th>
+                            <th class="text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Price</th>
+                            <th class="text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Quantity</th>
+                            <th class="text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Total</th>
+                            <th class="text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Remove</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
                         @forelse ($cart_items as $item)
-                        <!-- Product -->
                         <tr wire:key="{{ $item['product_id'] }}">
                             <td class="py-4">
-                                <div class="flex items-center">
-                                    <img class="h-16 w-16 mr-4" src="{{ url('storage', $item['image']) }}" alt="{{ $item['name'] }}">
-                                    <span class="font-semibold">{{ $item['name'] }}</span>
+                                <div class="flex items-center space-x-4">
+                                    <img class="h-16 w-16 rounded-md shadow" src="{{ url('storage', $item['image']) }}" alt="{{ $item['name'] }}">
+                                    <span class="font-semibold text-gray-800 dark:text-gray-300">{{ $item['name'] }}</span>
                                 </div>
                             </td>
-                            <td class="py-4">{{ Number::currency($item['unit_amount']) }}</td>
+                            <td class="py-4 text-gray-600 dark:text-gray-400">{{ Number::currency($item['unit_amount']) }}</td>
                             <td class="py-4">
-                                <div class="flex items-center">
-                                    <button wire:click="decreaseQty({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 mr-2">-</button>
+                                <div class="flex items-center space-x-2">
+                                    <button wire:click="decreaseQty({{ $item['product_id'] }})" class="border border-gray-300 rounded-md py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">-</button>
+
                                     <!-- Quantity Input -->
                                     @if ($editingQty === $item['product_id'])
                                     <input wire:model.defer="cart_items.{{ $item['product_id'] }}.quantity"
                                            wire:keydown.enter="saveQty({{ $item['product_id'] }})"
                                            wire:blur="saveQty({{ $item['product_id'] }})"
                                            type="text"
-                                           class="text-center w-16 border rounded-md py-1 px-2"
+                                           class="text-center w-16 border border-gray-300 rounded-md py-1 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                            value="{{ $item['quantity'] }}">
                                     @else
                                     <span wire:click="editQty({{ $item['product_id'] }})"
-                                          class="text-center cursor-pointer w-16 border rounded-md py-1 px-2">{{ $item['quantity'] }}</span>
+                                          class="text-center cursor-pointer w-16 border border-gray-300 rounded-md py-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ $item['quantity'] }}</span>
                                     @endif
-                                    <button wire:click="increaseQty({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 ml-2">+</button>
+
+                                    <button wire:click="increaseQty({{ $item['product_id'] }})" class="border border-gray-300 rounded-md py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">+</button>
                                 </div>
                             </td>
-                            <td class="py-4">{{ Number::currency($item['total_amount']) }}</td>
-                            <td>
-                                <button wire:click="removeItem({{ $item['product_id'] }})" class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">
-                                    <span wire.target="removeItem({{ $item['product_id'] }})">
+                            <td class="py-4 text-gray-600 dark:text-gray-400">{{ Number::currency($item['total_amount']) }}</td>
+                            <td class="py-4">
+                                <button wire:click="removeItem({{ $item['product_id'] }})" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
                                     Remove
-                                    </span>
                                 </button>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-4xl font-semibold text-slate-500">
+                            <td colspan="5" class="text-center py-6 text-xl font-semibold text-gray-500 dark:text-gray-400">
                                 No items available in cart!
                             </td>
                         </tr>
@@ -64,28 +64,30 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Cart Summary -->
             <div class="md:w-1/4">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-lg font-semibold mb-4">Summary</h2>
-                    <div class="flex justify-between mb-2">
-                        <span>Subtotal</span>
-                        <span>{{ Number::currency($grand_total) }}</span>
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+                    <h2 class="text-xl font-bold mb-6 text-gray-800 dark:text-white">Summary</h2>
+                    <div class="flex justify-between mb-4">
+                        <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
+                        <span class="text-gray-800 dark:text-white">{{ Number::currency($grand_total) }}</span>
                     </div>
-                    <div class="flex justify-between mb-2">
-                        <span>Taxes</span>
-                        <span>{{ Number::currency(0) }}</span>
+                    <div class="flex justify-between mb-4">
+                        <span class="text-gray-600 dark:text-gray-400">Taxes</span>
+                        <span class="text-gray-800 dark:text-white">{{ Number::currency(0) }}</span>
                     </div>
-                    <div class="flex justify-between mb-2">
-                        <span>Shipping</span>
-                        <span>{{ Number::currency(0) }}</span>
+                    <div class="flex justify-between mb-4">
+                        <span class="text-gray-600 dark:text-gray-400">Shipping</span>
+                        <span class="text-gray-800 dark:text-white">{{ Number::currency(0) }}</span>
                     </div>
-                    <hr class="my-2">
-                    <div class="flex justify-between mb-2">
-                        <span class="font-semibold">Grand Total</span>
-                        <span class="font-semibold">{{ Number::currency($grand_total) }}</span>
+                    <hr class="my-4 border-gray-300 dark:border-gray-700">
+                    <div class="flex justify-between mb-6">
+                        <span class="font-bold text-gray-800 dark:text-white">Grand Total</span>
+                        <span class="font-bold text-gray-800 dark:text-white">{{ Number::currency($grand_total) }}</span>
                     </div>
                     @if ($cart_items)
-                    <a href="/checkout" class="bg-blue-500 block text-center text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</a>
+                    <a href="/checkout" class="bg-blue-600 hover:bg-blue-700 text-white block text-center py-3 px-4 rounded-lg w-full">Checkout</a>
                     @endif
                 </div>
             </div>

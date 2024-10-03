@@ -37,7 +37,10 @@ class ProductsPage extends Component {
     public $price_range = 250;
 
     #[Url]
-    public $sort = 'latest';
+    public $sort = 'suggested';
+
+    #[Url]
+    public $searchQuery = ''; // Add search query property
 
     //Add To Cart
     public function addToCart($product_id) {
@@ -50,18 +53,12 @@ class ProductsPage extends Component {
         ]);
     }
 
-    public function index(Request $request) {
-        $searchQuery = $request->input('search');
-        $products = Product::query()
-            ->when($searchQuery, function($query, $searchQuery) {
-                return $query->where('name', 'like', '%' . $searchQuery . '%');
-            })
-            ->paginate(20);
-        return view('products.index', compact('products'));
-    }
-
     public function render() {
         $productQuery = Product::query()->where('is_active', 1);
+
+        if (!empty($this->searchQuery)) {
+            $productQuery->where('name', 'like', '%' . $this->searchQuery . '%');
+        }
         if(!empty($this->selected_categories)) {
             $productQuery->whereIn('category_id', $this->selected_categories);
         }
@@ -77,11 +74,14 @@ class ProductsPage extends Component {
         if($this->price_range) {
             $productQuery->whereBetween('price', [0, $this->price_range]);
         }
-        if($this->sort == 'latest'){
-            $productQuery->latest();
-        }
-        if($this->sort == 'price') {
+
+        // Handling sort
+        if ($this->sort == 'suggested') {
+            $productQuery->inRandomOrder(); // Tambahkan sorting random
+        } elseif ($this->sort == 'price') {
             $productQuery->orderBy('price');
+        } elseif ($this->sort == 'latest') {
+            $productQuery->latest();
         }
 
         return view('livewire.products-page', [

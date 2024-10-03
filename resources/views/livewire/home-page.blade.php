@@ -95,8 +95,7 @@
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque? Pariatur
-                    numquam, odio quod nobis ipsum ex cupiditate?
+                    Discover a selection of products tailored to fit your needs, whether for the season, special occasions, or daily essentials.
                 </p>
             </div>
         </div>
